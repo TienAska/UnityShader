@@ -1,12 +1,18 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 Shader "Unity Shaders Book/Chapter5/Simple Shader" {
-    SubShader{
+    Properties {
+        _Color("Color Tint", Color) = (1.0,1.0,1.0,1.0)
+    }
+
+    SubShader {
         Pass {
             CGPROGRAM
 
             #pragma vertex vert 
             #pragma fragment frag
+
+            fixed4 _Color;
 
             struct a2v {
                 float4 vertex : POSITION;
@@ -28,10 +34,12 @@ Shader "Unity Shaders Book/Chapter5/Simple Shader" {
             }
 
             fixed4 frag(v2f i) : SV_Target {
-                return fixed4(i.color, 1.0);
+                fixed3 c = i.color;
+                c *= _Color.rgb;
+                return fixed4(c, 1.0);
             }
 
             ENDCG
-        }
     }
+}
 }
