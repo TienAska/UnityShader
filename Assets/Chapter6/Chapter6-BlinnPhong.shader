@@ -1,4 +1,4 @@
-﻿Shader "Unity Shaders Book/Chapter 6/Specular Pixel-Level" {
+﻿Shader "Unity Shaders Book/Chapter 6/Blinn-Phong" {
     Properties{
         _Diffuse("Diffuse",Color) = (1,1,1,1)
         _Specular("Specular",Color) = (1,1,1,1)
@@ -49,10 +49,10 @@
 
                 fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate(dot(worldNormal, worldLightDir));
 
-                fixed3 reflectDir = normalize(reflect(-worldLightDir, worldNormal));
                 fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.worldPos);
+                fixed3 halfDir = normalize(worldLightDir + viewDir);
 
-                fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(reflectDir, viewDir)), _Gloss);
+                fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(halfDir, worldNormal)), _Gloss);
 
                 return fixed4(ambient + diffuse + specular, 1.0f);
             }
