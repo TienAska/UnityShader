@@ -84,7 +84,7 @@
                     fixed3 diffuse = _LightColor0.rgb * albedo * saturate(dot(tangentNormal, tangentLightDir));
 
                     fixed3 halfDir = normalize(tangentViewDir + tangentLightDir);
-                    fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(halfDir, tangentNormal)), _Gloss);
+					fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(halfDir, tangentNormal)), _Gloss);
 
                     return fixed4(ambient + diffuse + specular, 1.0f);
                 }

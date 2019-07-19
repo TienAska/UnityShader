@@ -82,7 +82,7 @@ Shader "Unity Shaders Book/Chapter 7/Normal Map In World Space" {
                     fixed3 diffuse = _LightColor0.rgb * albedo * saturate(dot(bump, lightDir));
 
                     fixed3 halfDir = normalize(viewDir + lightDir);
-                    fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(halfDir, bump)), _Gloss);
+                    fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(halfDir, bump)), _Gloss);
 
                     return fixed4(ambient + diffuse + specular, 1.0f);
                 }

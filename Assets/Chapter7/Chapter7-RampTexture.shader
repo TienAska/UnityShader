@@ -57,7 +57,7 @@
                 // Blinn-Phong lighting mode
                 fixed3 viewDir = normalize(UnityWorldSpaceViewDir(i.worldPos));
                 fixed3 halfDir = normalize(viewDir + worldLightDir);
-                fixed3 Specular = _LightColor0.rgb*_Specular.rgb*pow(saturate(dot(halfDir, worldNormal)), _Gloss);
+				fixed3 Specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(halfDir, worldNormal)), _Gloss);
 
                 return fixed4(ambient + diffuse + Specular, 1.0f);
             }
