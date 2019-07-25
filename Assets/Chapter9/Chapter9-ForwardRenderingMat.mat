@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ForwardRenderingMat
+  m_Name: Chapter9-ForwardRenderingMat
   m_Shader: {fileID: 4800000, guid: 990da98112c603247a3609c1567b28f1, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
