@@ -64,13 +64,18 @@ Shader "Unity Shaders Book/Chapter10/Reflection"
             {
                 fixed3 worldNormal = normalize(i.worldNormal);
                 fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldPos));
-                //fixed3 worldViewDir = normalize(i.worldViewDir);
+                
+                // sampling per pixel
+                fixed3 worldViewDir =  UnityWorldSpaceViewDir(i.worldPos);
+                fixed3 worldRefl = reflect(-worldViewDir, i.worldNormal);
 
                 fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 
                 fixed3 diffuse = _LightColor0.rgb * _Color.rgb * saturate(dot(worldNormal, worldLightDir));
 
                 fixed3 reflection = texCUBE(_Cubemap, i.worldRefl).rgb * _ReflectionColor.rgb;
+                // reflection in pixel level
+                //fixed3 reflection = texCUBE(_Cubemap, worldRefl).rgb * _ReflectionColor.rgb;
 
                 UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 
