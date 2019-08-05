@@ -1,9 +1,19 @@
 ﻿#ifndef MYRP_UNLIT_INCLUDE
 #define MYRP_UNLIT_INCLUDE
 
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+
+CBUFFER_START(UnityPerFram)
+    float4x4 unity_MatrixVP;
+CBUFFER_END
+
+CBUFFER_START(UnityPerDraw)
+    float4x4 unity_ObjectToWorld;
+CBUFFER_END
+
 struct VertexInput
 {
-    float pos : POSITION;
+    float3 pos : POSITION;
 };
 
 struct VertexOutput
@@ -13,8 +23,9 @@ struct VertexOutput
 
 VertexOutput UnlitPassVertex (VertexInput input)
 {
-    vertex output;
-    output.clipPos = UnityObjectToClipPos(input.pos);
+    VertexOutput output;
+    float4 worldPos = mul(unity_ObjectToWorld, float4(input.pos.xyz, 1.0));
+    output.clipPos = mul(unity_MatrixVP, worldPos);
     return output;
 }
 
