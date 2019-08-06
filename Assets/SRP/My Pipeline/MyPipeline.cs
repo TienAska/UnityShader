@@ -4,6 +4,15 @@ using Conditional = System.Diagnostics.ConditionalAttribute;
 
 public class MyPipeline : RenderPipeline
 {
+    bool bBatching;
+    bool bInstancing;
+
+    public MyPipeline(bool dynamicBatching, bool instancing)
+    {
+        bBatching = dynamicBatching;
+        bInstancing = instancing;
+    }
+
     protected override void Render(ScriptableRenderContext context, Camera[] cameras)
     {
         //base.Render(context, cameras);
@@ -54,6 +63,9 @@ public class MyPipeline : RenderPipeline
 
         // draw opaque
         var drawSettings = new DrawingSettings(new ShaderTagId("SRPDefaultUnlit"), new SortingSettings(camera));
+        drawSettings.enableDynamicBatching = bBatching;
+        drawSettings.enableInstancing = bInstancing;
+        drawSettings.sortingSettings = new SortingSettings() { criteria = SortingCriteria.CommonOpaque };
         var filterSettings = FilteringSettings.defaultValue;
         filterSettings.renderQueueRange = RenderQueueRange.opaque;
         context.DrawRenderers(cull, ref drawSettings, ref filterSettings);
