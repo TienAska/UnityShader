@@ -49,10 +49,11 @@ Shader "Unity Shaders Book/Chapter10/GlassRefraction"
             struct v2f
             {
                 float4 pos : SV_POSITION;
-                float4 srcPos : TEXCOORD0;
-                float3 TtoW0 : TEXCOORD1;
-                float3 TtoW1 : TEXCOORD2;
-                float3 TtoW2 : TEXCOORD3;
+                float4 uv : TEXCOORD0;
+                float4 scrPos : TEXCOORD1;
+                float4 TtoW0 : TEXCOORD2;
+                float4 TtoW1 : TEXCOORD3;
+                float4 TtoW2 : TEXCOORD4;
             };
 
             v2f vert(a2v v)
