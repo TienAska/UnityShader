@@ -62,7 +62,7 @@ Shader "Unity Shaders Book/Chapter11/ImageSequenceAnimation"
             {
                 float time = floor(_Time.y * _Speed);
                 float row = floor(time / _HorizontalAmount);
-                float column = time - row * _VerticalAmount;
+                float column = time - row * _HorizontalAmount;
                 half2 uv = i.uv + half2(column, -row);
                 uv.x /= _HorizontalAmount;
                 uv.y /= _VerticalAmount;
