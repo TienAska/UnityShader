@@ -12,8 +12,6 @@
     {
         Pass
         {
-            Tags { "LightMode"="ForwardBase" }
-
             ZTest Always
             Cull Off
             ZWrite Off
@@ -55,10 +53,10 @@
 
                 // Apply saturation
                 fixed luminance = Luminance(renderTex.rgb);
-                //fixed luminance = dot(fixed3(0.2125, 0.7154, 0.0721), renderTex.rgb);
                 fixed3 luminanceColor = float3(luminance, luminance, luminance);
                 finalColor = lerp(luminanceColor, finalColor, _Saturation);
 
+                // Apply contrast
                 fixed3 avgColor = fixed3(0.5,0.5,0.5);
                 finalColor = lerp(avgColor, finalColor, _Contrast);
 
