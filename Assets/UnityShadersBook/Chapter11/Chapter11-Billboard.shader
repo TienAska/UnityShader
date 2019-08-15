@@ -62,7 +62,13 @@ Shader "Unity Shaders Book/Chapter11/Billboard"
                 upDir = normalize(cross(normalDir, rightDir));
 
                 float3 centerOffs = v.vertex.xyz - center;
-                float3 localPos = center + rightDir * centerOffs.x + upDir * centerOffs.y + normalDir * centerOffs.z;
+                //float3 localPos = center + rightDir * centerOffs.x + upDir * centerOffs.y + normalDir * centerOffs.z;
+                float4 r1 = float4(rightDir.x, upDir.x, normalDir.x, center.x);
+                float4 r2 = float4(rightDir.y, upDir.y, normalDir.y, center.y);
+                float4 r3 = float4(rightDir.z, upDir.z, normalDir.z, center.z);
+                float4 r4 = float4(0,          0,       0,           1);
+                float4x4 rotation = float4x4(r1, r2, r3, r4);
+                float3 localPos = mul(rotation, float4(centerOffs, 1)).xyz;
 
                 o.pos = UnityObjectToClipPos(localPos);
 
