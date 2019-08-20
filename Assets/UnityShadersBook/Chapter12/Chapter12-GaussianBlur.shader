@@ -10,10 +10,6 @@
     {
         CGINCLUDE
 
-            #pragma vertex vertBlurVertical
-            #pragma vertex vertBlurHorizontal
-            #pragma fragment fragBlur
-
             #include "UnityCG.cginc"
 
             sampler2D _MainTex;
@@ -58,48 +54,6 @@
                 return o;
             }
 
-        ENDCG
-        Pass
-        {
-            ZTest Always
-            Cull Off
-            ZWrite Off
-
-            CGPROGRAM
-
-
-
-            half Sobel(v2f i)
-            {
-                const half Gx[9] = 
-                {
-                    -1, 0, 1,
-                    -2, 0, 2,
-                    -1, 0, 1
-                };
-
-                const half Gy[9] = 
-                {
-                    -1, -2, -1,
-                     0,  0,  0,
-                     1,  2,  1
-                };
-
-                half texColor;
-                half edgeX = 0;
-                half edgeY = 0;
-                for(int it = 0; it < 9; it++)
-                {
-                    texColor = Luminance(tex2D(_MainTex, i.uv[it]));
-                    edgeX += texColor * Gx[it];
-                    edgeY += texColor * Gy[it];
-                }
-
-                half edge = abs(edgeX) + abs(edgeY);
-
-                return edge;
-            }
-
             fixed4 fragBlur(v2f i) : SV_TARGET
             {
                 float weight[3] = {0.4026, 0.2442, 0.0545};
@@ -108,12 +62,39 @@
 
                 for(int it = 1; it < 3; it++)
                 {
-                    sum += tex2D(_MainTex, i.uv[it]).rgb * weight[it];
+                    sum += tex2D(_MainTex, i.uv[2*it-1]).rgb * weight[it];
                     sum += tex2D(_MainTex, i.uv[2*it]).rgb * weight[it];
                 }
 
                 return fixed4(sum, 1.0);
             }
+
+        ENDCG
+
+        ZTest Always
+        Cull Off
+        ZWrite Off
+
+        Pass
+        {
+            NAME "GAUSSIAN_BLUR_VERTICAL"
+
+            CGPROGRAM
+
+            #pragma vertex vertBlurVertical
+            #pragma fragment fragBlur
+
+            ENDCG
+        }
+
+        Pass
+        {
+            NAME "GAUSSIAN_BLUR_HORIZONTAL"
+
+            CGPROGRAM
+
+            #pragma vertex vertBlurHorizontal
+            #pragma fragment fragBlur
 
             ENDCG
         }
