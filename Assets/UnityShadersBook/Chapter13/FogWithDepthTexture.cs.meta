@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4e2716bc80dda124dbc5ebe21ce2ecc7
+guid: 3460a5a9afb39ff48a75cc1beea02c03
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - motionBlurShader: {fileID: 4800000, guid: 11ca647cfdbdb674b9544be1743f7aa0, type: 3}
+  - fogShader: {fileID: 4800000, guid: 135c410dc4c8e80488641d9e12f3d0f7, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
