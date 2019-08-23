@@ -48,51 +48,47 @@
                 #endif
 
                 o.uv[1] = uv + _MainTex_TexelSize.xy * half2(1, 1) * _SampleDistance;
-                o.uv[1] = uv + _MainTex_TexelSize.xy * half2(-1, -1) * _SampleDistance;
-                o.uv[1] = uv + _MainTex_TexelSize.xy * half2(-1, 1) * _SampleDistance;
-                o.uv[1] = uv + _MainTex_TexelSize.xy * half2(1, -1) * _SampleDistance;
-
-                int index = 0;
-                if(v.texcoord.x < 0.5 && v.texcoord.y < 0.5)
-                {
-                    index = 0;
-                }
-                else if(v.texcoord.x > 0.5 && v.texcoord.y < 0.5)
-                {
-                    index = 1;
-                }
-                else if(v.texcoord.x > 0.5 && v.texcoord.y > 0.5)
-                {
-                    index = 2;
-                }
-                else
-                {
-                    index = 3;
-                }
-
-                #if UNITY_UV_STARTS_AT_TOP
-                    if(_MainTex_TexelSize.y < 0)
-                        index = 3 - index;
-                #endif
-
-                o.interpolatedRay = _FrustumCornersRay[index];
+                o.uv[2] = uv + _MainTex_TexelSize.xy * half2(-1, -1) * _SampleDistance;
+                o.uv[3] = uv + _MainTex_TexelSize.xy * half2(-1, 1) * _SampleDistance;
+                o.uv[4] = uv + _MainTex_TexelSize.xy * half2(1, -1) * _SampleDistance;
 
                 return o;
             }
 
-            fixed4 frag(v2f i) : SV_TARGET
+            half CheckSame(half4 center, half4 sample)
             {
-                float linearDepth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv_depth));
-                float3 worldPos = _WorldSpaceCameraPos + linearDepth * i.interpolatedRay.xyz;
+                half2 centerNormal = center.xy;
+                float centerDepth = DecodeFloatRG(center.zw);
+                half2 sampleNormal = sample.xy;
+                float sampleDepth = DecodeFloatRG(sample.zw);
 
-                float fogDensity = (_FogEnd - worldPos.y) / (_FogEnd - _FogStart);
-                fogDensity = saturate(fogDensity * _FogDensity);
+                half2 diffNormal = abs(centerNormal - sampleNormal) * _Sensitivity.x;
+                int isSameNormal = (diffNormal.x + diffNormal.y) < 0.1;
 
-                fixed4 finalColor = tex2D(_MainTex, i.uv);
-                finalColor.rgb = lerp(finalColor.rgb, _FogColor.rgb, fogDensity);
+                float diffDepth = abs(centerDepth - sampleDepth) * _Sensitivity.y;
+                int isSameDepth = diffDepth < 0.1 * centerDepth;
 
-                return finalColor;
+                return isSameNormal * isSameDepth ? 1.0 : 0.0;
             }
+
+            fixed4 fragRobertCrossDepthAndNormal(v2f i) : SV_TARGET
+            {
+                half4 sample1= tex2D(_CameraDepthNormalsTexture, i.uv[1]);
+                half4 sample2= tex2D(_CameraDepthNormalsTexture, i.uv[2]);
+                half4 sample3= tex2D(_CameraDepthNormalsTexture, i.uv[3]);
+                half4 sample4= tex2D(_CameraDepthNormalsTexture, i.uv[4]);
+
+                half edge = 1.0f;
+
+                edge *= CheckSame(sample1, sample2);
+                edge *= CheckSame(sample3, sample4);
+
+                fixed4 withEdgeColor = lerp(_EdgeColor, tex2D(_MainTex, i.uv[0]), edge);
+                fixed4 onlyEdgeColor = lerp(_EdgeColor, _BackgroundColor, edge);
+
+                return lerp(withEdgeColor, onlyEdgeColor, _EdgeOnly);
+            }
+            
         ENDCG
 
         Pass
@@ -104,7 +100,7 @@
             CGPROGRAM
 
             #pragma vertex vert
-            #pragma fragment frag
+            #pragma fragment fragRobertCrossDepthAndNormal
 
             ENDCG
         }
