@@ -21,7 +21,7 @@ UNITY_INSTANCING_BUFFER_END(PerInstance)
 
 struct VertexInput
 {
-    float3 pos : POSITION;
+    float4 pos : POSITION;
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 

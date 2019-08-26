@@ -4,11 +4,21 @@ using Conditional = System.Diagnostics.ConditionalAttribute;
 
 public class MyPipeline : RenderPipeline
 {
+    const int maxVisibleLights = 4;
+
+    static int visibleLightColorsId = Shader.PropertyToID("_VisibleLightColors");
+    static int visibleLightDirectionsId = Shader.PropertyToID("_VisibleLightDirections");
+
+    Vector4[] visibleLightColors = new Vector4[maxVisibleLights];
+    Vector4[] visibleLightDirections = new Vector4[maxVisibleLights];
+
     bool bBatching;
     bool bInstancing;
 
     public MyPipeline(bool dynamicBatching, bool instancing)
     {
+        GraphicsSettings.lightsUseLinearIntensity = true;
+
         bBatching = dynamicBatching;
         bInstancing = instancing;
     }
@@ -57,7 +67,12 @@ public class MyPipeline : RenderPipeline
             (clearFlags & CameraClearFlags.Color) != 0,
             camera.backgroundColor
         );
+
+        ConfigureLights();
+
         cameraBuffer.BeginSample("Render Camera");
+        cameraBuffer.SetGlobalVectorArray(visibleLightColorsId, visibleLightColors);
+        cameraBuffer.SetGlobalVectorArray(visibleLightDirectionsId, visibleLightDirections);
         context.ExecuteCommandBuffer(cameraBuffer);
         cameraBuffer.Clear();
 
@@ -107,5 +122,19 @@ public class MyPipeline : RenderPipeline
         var filterSettings = FilteringSettings.defaultValue;
 
         context.DrawRenderers(cull, ref drawSettings, ref filterSettings);
+    }
+
+    void ConfigureLights()
+    {
+        for (int i = 0; i < cull.visibleLights.Length; i++)
+        {
+            VisibleLight light = cull.visibleLights[i];
+            visibleLightColors[i] = light.finalColor;
+            Vector4 v = light.localToWorldMatrix.GetColumn(2);
+            v.x = -v.x;
+            v.y = -v.y;
+            v.z = -v.z;
+            visibleLightDirections[i] = v;
+        }
     }
 }
