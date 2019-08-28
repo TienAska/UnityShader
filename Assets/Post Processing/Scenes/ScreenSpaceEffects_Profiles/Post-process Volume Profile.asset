@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Post-process Volume Profile
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 1948565138704302170}
---- !u!114 &1948565138704302170
+  - {fileID: 3099339100221207764}
+--- !u!114 &3099339100221207764
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23,19 +23,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 601bc130af1a9f744879d2270bf372b1, type: 3}
-  m_Name: BSC
+  m_Script: {fileID: 11500000, guid: 91641048116731f46889b107874b1373, type: 3}
+  m_Name: Outline
   m_EditorClassIdentifier: 
   active: 1
   enabled:
     overrideState: 1
     value: 1
-  brightness:
+  edgeOnly:
+    overrideState: 1
+    value: 0
+  edgeColor:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0, a: 1}
+  backgroundColor:
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 1}
+  simpleDistance:
     overrideState: 0
     value: 1
-  satruation:
+  sensitivityDepth:
     overrideState: 0
     value: 1
-  contrast:
+  sensitivityNormals:
     overrideState: 0
     value: 1
