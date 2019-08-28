@@ -16,8 +16,6 @@
 
             #include "UnityCG.cginc"
 
-            float4x4 _FrustumCornersRay;
-
             sampler2D _MainTex;
             half4 _MainTex_TexelSize;
             fixed _EdgeOnly;
