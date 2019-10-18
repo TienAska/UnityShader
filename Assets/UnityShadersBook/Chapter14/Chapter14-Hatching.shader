@@ -46,10 +46,69 @@
 					float3 worldPos : TEXCOORD3;
 				};
 
+				half3 getLightWorldDir(half3 positionLS)
+				{
+					half3 lightDir = _MainLightPosition.xyz;
+
+				#ifdef _ADDITIONAL_LIGHTS
+					int perObjectLightIndex = GetPerObjectLightIndex(i);
+				    float3 lightPositionWS = _AdditionalLightsPosition[perObjectLightIndex].xyz;
+					
+					half3 positionWS = TransformObjectToWorld(positionLS);
+					float3 lightVector = lightPositionWS - positionWS;
+					float distanceSqr = max(dot(lightVector, lightVector), HALF_MIN);
+
+					lightDir = half3(lightVector * rsqrt(distanceSqr));		
+				#endif
+
+					return lightDir;
+				}
+
 				v2f vert (a2v v)
 				{
 					v2f o;
-					o.worldPos = TransformObjectToWorld(o.vertex.xyz);
+					o.worldPos = TransformObjectToWorld(v.vertex.xyz);
+					o.uv = v.texcoord.xy * _TileFactor;
+
+					half3 worldLightDir = normalize(getLightWorldDir(v.vertex.xuz))
+					half3 worldNormal = TransformObjectToWorldNormal(v.normal);
+
+					half diff = saturate(dot(worldLightDir, worldNormal));
+
+					o.hatchWeights0 = fixed3(0,0,0);
+					o.hatchWeights1 = fixed3(0,0,0);
+
+					float hatchFactor = diff * 7.0f;
+
+					switch(ceil(hatchFactor))
+					{
+					case 6:
+						o.hatchWeights0.x = hatchFactor - 5.0f;
+						break;
+					case 5:
+						o.hatchWeights0.x = hatchFactor - 4.0f;
+						o.hatchWeights0.y = 1.0f - o.hatchWeights0.x;
+						break;
+					case 4:
+						o.hatchWeights0.y = hatchFactor - 3.0f;
+						o.hatchWeights0.z = 1.0f - o.hatchWeights0.y;
+						break;
+					case 3:
+						o.hatchWeights0.z = hatchFactor - 2.0f;
+						o.hatchWeights1.x = 1.0f - o.hatchWeights0.z;
+						break;
+					case 2:
+						o.hatchWeights1.x = hatchFactor - 1.0f;
+						o.hatchWeights1.y = 1.0f - o.hatchWeights1.x;
+						break;
+					case 1:
+						o.hatchWeights1.y = hatchFactor;
+						o.hatchWeights1.z = 1.0f - o.hatchWeights1.y;
+						break;
+					default:
+						break;
+					}
+						
 				}
 			ENDHLSL
 		}
