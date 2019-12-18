@@ -2,7 +2,7 @@
 using UnityEngine.Rendering;
 using Conditional = System.Diagnostics.ConditionalAttribute;
 
-public class MyPipeline : RenderPipeline
+public class CameraRenderer
 {
     const int maxVisibleLights = 4;
 
@@ -12,33 +12,19 @@ public class MyPipeline : RenderPipeline
     Vector4[] visibleLightColors = new Vector4[maxVisibleLights];
     Vector4[] visibleLightDirections = new Vector4[maxVisibleLights];
 
-    bool bBatching;
-    bool bInstancing;
+    ScriptableRenderContext context;
 
-    public MyPipeline(bool dynamicBatching, bool instancing)
-    {
-        GraphicsSettings.lightsUseLinearIntensity = true;
-
-        bBatching = dynamicBatching;
-        bInstancing = instancing;
-    }
-
-    protected override void Render(ScriptableRenderContext context, Camera[] cameras)
-    {
-        //base.Render(context, cameras);
-        foreach (var camera in cameras)
-        {
-            Render(context, camera);
-        }
-    }
-
+    Camera camera;
 
     CommandBuffer cameraBuffer = new CommandBuffer() { name = "Render Camera" };
 
     CullingResults cull;
 
-    void Render(ScriptableRenderContext context, Camera camera)
+    public void Render(ScriptableRenderContext context, Camera camera)
     {
+        this.context = context;
+        this.camera = camera;
+
         // culling parameter setup
         ScriptableCullingParameters cullingParameters;
         if (!camera.TryGetCullingParameters(out cullingParameters))
@@ -78,8 +64,8 @@ public class MyPipeline : RenderPipeline
 
         // draw opaque
         var drawSettings = new DrawingSettings(new ShaderTagId("SRPDefaultUnlit"), new SortingSettings(camera));
-        drawSettings.enableDynamicBatching = bBatching;
-        drawSettings.enableInstancing = bInstancing;
+        //drawSettings.enableDynamicBatching = bBatching;
+        //drawSettings.enableInstancing = bInstancing;
         drawSettings.sortingSettings = new SortingSettings() { criteria = SortingCriteria.CommonOpaque };
         var filterSettings = FilteringSettings.defaultValue;
         filterSettings.renderQueueRange = RenderQueueRange.opaque;
