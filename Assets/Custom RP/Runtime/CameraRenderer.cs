@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
-using Conditional = System.Diagnostics.ConditionalAttribute;
 
-public class CameraRenderer
+public partial class CameraRenderer
 {
     const int maxVisibleLights = 4;
 
@@ -16,18 +15,19 @@ public class CameraRenderer
 
     Camera camera;
 
-    CommandBuffer cameraBuffer = new CommandBuffer() { name = "Render Camera" };
+    const string bufferName = "Render Camera";
+    CommandBuffer buffer = new CommandBuffer() { name = bufferName };
 
-    CullingResults cull;
+    CullingResults cullingResults;
+
+    static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
 
     public void Render(ScriptableRenderContext context, Camera camera)
     {
         this.context = context;
         this.camera = camera;
 
-        // culling parameter setup
-        ScriptableCullingParameters cullingParameters;
-        if (!camera.TryGetCullingParameters(out cullingParameters))
+        if (!Cull())
         {
             return;
         }
@@ -40,81 +40,82 @@ public class CameraRenderer
         }
 #endif
 
-        cull = context.Cull(ref cullingParameters);
-
-        // setup current camera
-        context.SetupCameraProperties(camera);
-
-        // camera clear
-        CameraClearFlags clearFlags = camera.clearFlags;
-        cameraBuffer.ClearRenderTarget
-        (
-            (clearFlags & CameraClearFlags.Depth) != 0,
-            (clearFlags & CameraClearFlags.Color) != 0,
-            camera.backgroundColor
-        );
+        Setup();
 
         ConfigureLights();
 
-        cameraBuffer.BeginSample("Render Camera");
-        cameraBuffer.SetGlobalVectorArray(visibleLightColorsId, visibleLightColors);
-        cameraBuffer.SetGlobalVectorArray(visibleLightDirectionsId, visibleLightDirections);
-        context.ExecuteCommandBuffer(cameraBuffer);
-        cameraBuffer.Clear();
+        buffer.SetGlobalVectorArray(visibleLightColorsId, visibleLightColors);
+        buffer.SetGlobalVectorArray(visibleLightDirectionsId, visibleLightDirections);
 
+        DrawVisibleGeometry();
+
+        // draw defult surface shader
+        DrawUnsupportedShaders();
+
+        Submit();
+    }
+
+    bool Cull()
+    {
+        // culling parameter setup
+        if (camera.TryGetCullingParameters(out ScriptableCullingParameters p))
+        {
+            cullingResults = context.Cull(ref p);
+            return true;
+        }
+        return false;
+    }
+
+    void Setup()
+    {
+        // setup camera properties before clear to use quick clear method
+        context.SetupCameraProperties(camera);
+        // camera clear
+        buffer.ClearRenderTarget(true, true, Color.clear);
+        // setup current camera
+        buffer.BeginSample(bufferName);
+        ExecuteBuffer();
+    }
+
+    void ExecuteBuffer()
+    {
+        context.ExecuteCommandBuffer(buffer);
+        buffer.Clear();
+    }
+
+    void Submit()
+    { 
+        buffer.EndSample(bufferName);
+        ExecuteBuffer();
+        context.Submit();
+    }
+
+    void DrawVisibleGeometry()
+    {
         // draw opaque
-        var drawSettings = new DrawingSettings(new ShaderTagId("SRPDefaultUnlit"), new SortingSettings(camera));
+        var sortingSettings = new SortingSettings(camera) { criteria = SortingCriteria.CommonOpaque };
+        var drawingSettings = new DrawingSettings(unlitShaderTagId, sortingSettings);
         //drawSettings.enableDynamicBatching = bBatching;
         //drawSettings.enableInstancing = bInstancing;
-        drawSettings.sortingSettings = new SortingSettings() { criteria = SortingCriteria.CommonOpaque };
-        var filterSettings = FilteringSettings.defaultValue;
-        filterSettings.renderQueueRange = RenderQueueRange.opaque;
-        context.DrawRenderers(cull, ref drawSettings, ref filterSettings);
+        var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
+        context.DrawRenderers(cullingResults, ref drawingSettings, ref filteringSettings);
 
         // draw skeybox
         context.DrawSkybox(camera);
 
         // draw transparent
-        filterSettings.renderQueueRange = RenderQueueRange.transparent;
-        context.DrawRenderers(cull, ref drawSettings, ref filterSettings);
-
-        // draw defult surface shader
-        DrawDefaultPipeline(context, camera);
-
-        cameraBuffer.EndSample("Render Camera");
-        context.ExecuteCommandBuffer(cameraBuffer);
-        cameraBuffer.Clear();
-
-        context.Submit();
+        sortingSettings.criteria = SortingCriteria.CommonTransparent;
+        drawingSettings.sortingSettings = sortingSettings;
+        filteringSettings.renderQueueRange = RenderQueueRange.transparent;
+        context.DrawRenderers(cullingResults, ref drawingSettings, ref filteringSettings);
     }
 
-    Material errorMaterial;
-
-    [Conditional("DEVELOPMENT_BUILD"), Conditional("UNITY_EDITOR")]
-    void DrawDefaultPipeline(ScriptableRenderContext context, Camera camera)
-    {
-        if (errorMaterial == null)
-        {
-            Shader errorShader = Shader.Find("Hidden/InternalErrorShader");
-            errorMaterial = new Material(errorShader) { hideFlags = HideFlags.HideAndDontSave };
-        }
-
-        var drawSettings = new DrawingSettings(new ShaderTagId("ForwardBase"), new SortingSettings(camera)) { overrideMaterial = errorMaterial, overrideMaterialPassIndex = 0 };
-        drawSettings.SetShaderPassName(1, new ShaderTagId("PrepassBase"));
-        drawSettings.SetShaderPassName(2, new ShaderTagId("Always"));
-        drawSettings.SetShaderPassName(3, new ShaderTagId("Vertex"));
-        drawSettings.SetShaderPassName(4, new ShaderTagId("VertexLMRGBM"));
-        drawSettings.SetShaderPassName(5, new ShaderTagId("VertexLM"));
-        var filterSettings = FilteringSettings.defaultValue;
-
-        context.DrawRenderers(cull, ref drawSettings, ref filterSettings);
-    }
 
     void ConfigureLights()
     {
-        for (int i = 0; i < cull.visibleLights.Length; i++)
+        for (int i = 0; i < cullingResults.visibleLights.Length; i++)
         {
-            VisibleLight light = cull.visibleLights[i];
+            VisibleLight light = cullingResults.visibleLights[i];
             visibleLightColors[i] = light.finalColor;
             Vector4 v = light.localToWorldMatrix.GetColumn(2);
             v.x = -v.x;

@@ -19,7 +19,7 @@ public class MotionBlurWithDepthTexture : PostEffectsBase
 
     private Camera myCamera;
 
-    public Camera camera
+    public new Camera camera
     {
         get
         {
