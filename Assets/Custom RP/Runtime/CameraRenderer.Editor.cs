@@ -1,10 +1,17 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Rendering;
 //using Conditional = System.Diagnostics.ConditionalAttribute;
 
 partial class CameraRenderer
 {
+    partial void DrawGizoms();
+
     partial void DrawUnsupportedShaders();
+
+    partial void PrepareForSceneWindow();
+
+    partial void PrepareBuffer();
 
 #if UNITY_EDITOR
 
@@ -18,6 +25,15 @@ partial class CameraRenderer
     };
 
     static Material errorMaterial;
+
+    partial void DrawGizoms()
+    {
+        if (Handles.ShouldRenderGizmos())
+        {
+            context.DrawGizmos(camera, GizmoSubset.PreImageEffects);
+            context.DrawGizmos(camera, GizmoSubset.PostImageEffects);
+        }
+    }
 
     //[Conditional("DEVELOPMENT_BUILD"), Conditional("UNITY_EDITOR")]
     partial void DrawUnsupportedShaders()
@@ -37,6 +53,26 @@ partial class CameraRenderer
 
         context.DrawRenderers(cullingResults, ref drawingSettings, ref filteringSettings);
     }
+
+    partial void PrepareForSceneWindow()
+    {
+        // inject ui into scene window
+        if (camera.cameraType == CameraType.SceneView)
+        {
+            ScriptableRenderContext.EmitWorldGeometryForSceneView(camera);
+        }
+    }
+
+    string SampleName { get; set; }
+
+    partial void PrepareBuffer()
+    {
+        buffer.name = SampleName = camera.name;
+    }
+
+#else
+
+    const string SampleName = bufferName;
 
 #endif
 }

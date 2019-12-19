@@ -27,18 +27,12 @@ public partial class CameraRenderer
         this.context = context;
         this.camera = camera;
 
+        PrepareBuffer();
+        PrepareForSceneWindow();
         if (!Cull())
         {
             return;
         }
-
-#if UNITY_EDITOR
-        // inject ui into scene window
-        if (camera.cameraType == CameraType.SceneView)
-        {
-            ScriptableRenderContext.EmitWorldGeometryForSceneView(camera);
-        }
-#endif
 
         Setup();
 
@@ -51,6 +45,8 @@ public partial class CameraRenderer
 
         // draw defult surface shader
         DrawUnsupportedShaders();
+
+        DrawGizoms();
 
         Submit();
     }
@@ -73,7 +69,7 @@ public partial class CameraRenderer
         // camera clear
         buffer.ClearRenderTarget(true, true, Color.clear);
         // setup current camera
-        buffer.BeginSample(bufferName);
+        buffer.BeginSample(SampleName);
         ExecuteBuffer();
     }
 
@@ -85,7 +81,7 @@ public partial class CameraRenderer
 
     void Submit()
     { 
-        buffer.EndSample(bufferName);
+        buffer.EndSample(SampleName);
         ExecuteBuffer();
         context.Submit();
     }
