@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 44671401}
   - component: {fileID: 44671400}
   - component: {fileID: 44671399}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere Standard Opaque (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 274347409}
   - component: {fileID: 274347408}
   - component: {fileID: 274347407}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere Standard Transparent (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -864,7 +864,7 @@ GameObject:
   - component: {fileID: 954752867}
   - component: {fileID: 954752866}
   - component: {fileID: 954752865}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere Standard Opaque
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1002,7 +1002,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 307
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1133,7 +1133,7 @@ GameObject:
   - component: {fileID: 1143900769}
   - component: {fileID: 1143900768}
   - component: {fileID: 1143900767}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere Standard Transparent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1435,7 +1435,7 @@ Camera:
   m_GameObject: {fileID: 1604239716}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -1445,10 +1445,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 0.45
+    y: 0.45
+    width: 0.1
+    height: 0.1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1457,7 +1457,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.Rendering;
 //using Conditional = System.Diagnostics.ConditionalAttribute;
 
@@ -67,12 +68,14 @@ partial class CameraRenderer
 
     partial void PrepareBuffer()
     {
+        Profiler.BeginSample("Editor Only");
         buffer.name = SampleName = camera.name;
+        Profiler.EndSample();
     }
 
 #else
 
-    const string SampleName = bufferName;
+    string SampleName => bufferName;
 
 #endif
 }

@@ -66,8 +66,14 @@ public partial class CameraRenderer
     {
         // setup camera properties before clear to use quick clear method
         context.SetupCameraProperties(camera);
+        CameraClearFlags flags = camera.clearFlags;
         // camera clear
-        buffer.ClearRenderTarget(true, true, Color.clear);
+        buffer.ClearRenderTarget
+        (
+            flags <= CameraClearFlags.Depth,
+            flags == CameraClearFlags.Color,
+            flags == CameraClearFlags.Color ? camera.backgroundColor.linear : Color.clear
+        );
         // setup current camera
         buffer.BeginSample(SampleName);
         ExecuteBuffer();
