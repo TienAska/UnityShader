@@ -10,7 +10,7 @@ public class RandomColor
         {
             if (so != null)
             {
-                so.GetComponent<MeshRenderer>().sharedMaterial.SetColor("_Color", Random.ColorHSV());
+                so.GetComponent<MeshRenderer>().sharedMaterial.SetColor("_BaseColor", Random.ColorHSV());
             }
         }
     }

@@ -1,8 +1,8 @@
-﻿Shader"My Pipeline/Unlit"
+﻿Shader"Custom RP/Unlit"
 {
     Properties
     {
-		_Color ("Color", Color) = (1, 1, 1, 1)
+		_BaseColor ("Color", Color) = (1.0, 1.0, 1.0, 1.0)
     }
 
     SubShader
@@ -19,7 +19,7 @@
             #pragma vertex UnlitPassVertex
             #pragma fragment UnlitPassFragment
 
-            #include "../ShaderLibrary/Unlit.hlsl"
+            #include "../ShaderLibrary/UnlitPass.hlsl"
 
             
 

@@ -1,22 +1,12 @@
-﻿#ifndef MYRP_UNLIT_INCLUDE
-#define MYRP_UNLIT_INCLUDE
+﻿#ifndef CUSTOM_UNLIT_PASS_INCLUDE
+#define CUSTOM_UNLIT_PASS_INCLUDE
 
-#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-
-CBUFFER_START(UnityPerFram)
-    float4x4 unity_MatrixVP;
-CBUFFER_END
-
-CBUFFER_START(UnityPerDraw)
-    float4x4 unity_ObjectToWorld;
-CBUFFER_END
-
-#define UNITY_MATRIX_M unity_ObjectToWorld
+#include "../ShaderLibrary/Common.hlsl"
 
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
 
 UNITY_INSTANCING_BUFFER_START(PerInstance)
-	UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
+	UNITY_DEFINE_INSTANCED_PROP(float4, _BaseColor)
 UNITY_INSTANCING_BUFFER_END(PerInstance)
 
 struct VertexInput
@@ -44,8 +34,8 @@ VertexOutput UnlitPassVertex (VertexInput input)
 float4 UnlitPassFragment (VertexOutput input) : SV_TARGET
 {
     UNITY_SETUP_INSTANCE_ID(input);
-    return UNITY_ACCESS_INSTANCED_PROP(PerInstance, _Color);
+    return UNITY_ACCESS_INSTANCED_PROP(PerInstance, _BaseColor);
 }
 
 
-#endif // MYRP_UNLIT_INCLUDE
+#endif // CUSTOM_UNLIT_PASS_INCLUDE
