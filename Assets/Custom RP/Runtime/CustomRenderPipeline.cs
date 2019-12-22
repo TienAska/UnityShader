@@ -17,6 +17,7 @@ public class CustomRenderPipeline : RenderPipeline
 
     public CustomRenderPipeline(bool dynamicBatching, bool instancing)
     {
+        GraphicsSettings.useScriptableRenderPipelineBatching = true;
         GraphicsSettings.lightsUseLinearIntensity = true;
 
         //bBatching = dynamicBatching;

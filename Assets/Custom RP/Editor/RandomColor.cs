@@ -3,14 +3,17 @@ using UnityEngine;
 
 public class RandomColor
 {
+    static PerObjectMaterialProperties perObjMatProperty;
+
     [MenuItem("GameObject/SetRandomColor")]
     static void SetRandomColor()
     {
-        foreach (GameObject so in Selection.objects)
+        foreach (GameObject selectedObjs in Selection.gameObjects)
         {
-            if (so != null)
+            perObjMatProperty = selectedObjs.GetComponent<PerObjectMaterialProperties>();
+            if (perObjMatProperty != null)
             {
-                so.GetComponent<MeshRenderer>().sharedMaterial.SetColor("_BaseColor", Random.ColorHSV());
+                perObjMatProperty.setColor(Random.ColorHSV());
             }
         }
     }

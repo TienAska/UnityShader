@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -167,6 +168,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -225,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.61468756, g: 0.9622642, b: 0.22241013, a: 1}
+  baseColor: {r: 0.67899615, g: 0.6390801, b: 0.2550271, a: 1}
 --- !u!1 &193103621
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +275,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -331,7 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.70094264, g: 0.29214135, b: 0.9528302, a: 1}
+  baseColor: {r: 0.08082947, g: 0.0220428, b: 0.21830645, a: 1}
 --- !u!1 &210981873
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,6 +382,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -437,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.73616624, g: 0.9339623, b: 0.6123621, a: 1}
+  baseColor: {r: 0.5431046, g: 0.043282196, b: 0.47356376, a: 1}
 --- !u!1 &320481929
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +489,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -543,7 +548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 1, b: 1, a: 1}
+  baseColor: {r: 0.16296124, g: 0.10997414, b: 0.23959318, a: 1}
 --- !u!1 &325039252
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,6 +596,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -649,7 +655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.9433962, g: 0.6541474, b: 0.85396177, a: 1}
+  baseColor: {r: 0.52192026, g: 0.38574696, b: 0.63133746, a: 1}
 --- !u!1 &507804381
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,6 +703,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -755,7 +762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 0, b: 0, a: 1}
+  baseColor: {r: 0.08543144, g: 0.31092346, b: 0.39823848, a: 1}
 --- !u!1 &615057844
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +810,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -861,7 +869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.26666668, g: 0.43529412, b: 1, a: 1}
+  baseColor: {r: 0.35539892, g: 0.2071314, b: 0.26258507, a: 1}
 --- !u!1 &634994656
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,6 +917,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -967,7 +976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0.19680643, b: 1, a: 1}
+  baseColor: {r: 0.5790493, g: 0.7146044, b: 0.8571104, a: 1}
 --- !u!1 &656387469
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,8 +1002,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656387469}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -1106,6 +1116,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1164,7 +1175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 1}
+  baseColor: {r: 0.3097008, g: 0.48369795, b: 0.010320852, a: 1}
 --- !u!1 &945840777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,6 +1223,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1270,7 +1282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.5882353, g: 1, b: 0.1764706, a: 1}
+  baseColor: {r: 0.09247992, g: 0.12060286, b: 0.06638876, a: 1}
 --- !u!1 &1085705765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,6 +1330,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1376,7 +1389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 0, b: 0.2957449, a: 1}
+  baseColor: {r: 0.70598024, g: 0.54716223, b: 0.6342182, a: 1}
 --- !u!1 &1171979206
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,6 +1437,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1482,7 +1496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.7924528, g: 0.6294188, b: 0.33268064, a: 1}
+  baseColor: {r: 0.44804406, g: 0.4743798, b: 0.4922971, a: 1}
 --- !u!1 &1222891364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,6 +1544,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1588,7 +1603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.5, g: 0.2948113, b: 0.31141192, a: 1}
+  baseColor: {r: 0.6146572, g: 0.62108576, b: 0.6538796, a: 1}
 --- !u!1 &1235867078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,6 +1651,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1694,7 +1710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.34531865, g: 0.754717, b: 0.6885608, a: 1}
+  baseColor: {r: 0.04051915, g: 0.1701516, b: 0.09541405, a: 1}
 --- !u!1 &1252745631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,6 +1841,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1883,7 +1900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.26415092, g: 0.26080406, b: 0.16073334, a: 1}
+  baseColor: {r: 0.5175036, g: 0.72954994, b: 0.31347254, a: 1}
 --- !u!1 &1300408952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,6 +1948,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1989,7 +2007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.31941974, g: 0.6981132, b: 0.3264738, a: 1}
+  baseColor: {r: 0.0923186, g: 0.66191715, b: 0.54871976, a: 1}
 --- !u!1 &1307045271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2037,6 +2055,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2095,7 +2114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.15232289, g: 0.16605374, b: 0.1981132, a: 1}
+  baseColor: {r: 0.067650564, g: 0.049365655, b: 0.06550297, a: 1}
 --- !u!1 &1394675050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,6 +2162,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2201,7 +2221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.5377358, g: 0.1953097, b: 0.50269824, a: 1}
+  baseColor: {r: 0.015578947, g: 0.0011197667, b: 0.017037036, a: 1}
 --- !u!1 &1445721726
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,6 +2269,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2307,7 +2328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.572245, g: 0.6320754, b: 0.062611245, a: 1}
+  baseColor: {r: 0.9870043, g: 0.99284124, b: 0.98961663, a: 1}
 --- !u!1 &1463240450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2355,6 +2376,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2413,7 +2435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.099012114, g: 0.20781448, b: 0.23584908, a: 1}
+  baseColor: {r: 0.22922565, g: 0.36665335, b: 0.26743963, a: 1}
 --- !u!1 &1515421457
 GameObject:
   m_ObjectHideFlags: 0
@@ -2461,6 +2483,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2519,7 +2542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.12896048, g: 0.14342055, b: 0.16981131, a: 1}
+  baseColor: {r: 0.2830101, g: 0.6200351, b: 0.3582947, a: 1}
 --- !u!1 &1541244240
 GameObject:
   m_ObjectHideFlags: 0
@@ -2567,6 +2590,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2625,7 +2649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.38963008, g: 0.6886792, b: 0.21115166, a: 1}
+  baseColor: {r: 0.73219013, g: 0.7222923, b: 0.7460088, a: 1}
 --- !u!1 &1571962147
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,6 +2697,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2731,7 +2756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.30709326, g: 0.41961464, b: 0.6320754, a: 1}
+  baseColor: {r: 0.05107129, g: 0.6692186, b: 0.1500091, a: 1}
 --- !u!1 &1584925870
 GameObject:
   m_ObjectHideFlags: 0
@@ -2779,6 +2804,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2837,7 +2863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.26415092, g: 0.080989674, b: 0.16247489, a: 1}
+  baseColor: {r: 0.5910712, g: 0.08892355, b: 0.47428066, a: 1}
 --- !u!1 &1600470692
 GameObject:
   m_ObjectHideFlags: 0
@@ -2885,6 +2911,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2943,7 +2970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
+  baseColor: {r: 0.5454586, g: 0.6485789, b: 0.76426065, a: 1}
 --- !u!1 &1630354196
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,6 +3018,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3049,7 +3077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 0.68593115, b: 0, a: 1}
+  baseColor: {r: 0.04755039, g: 0.046088323, b: 0.058193333, a: 1}
 --- !u!1 &1865325474
 GameObject:
   m_ObjectHideFlags: 0
@@ -3097,6 +3125,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3155,7 +3184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.13483447, g: 0.2830189, b: 0.15123363, a: 1}
+  baseColor: {r: 0.8276613, g: 0.4495557, b: 0.31971264, a: 1}
 --- !u!1 &1873325666
 GameObject:
   m_ObjectHideFlags: 0
@@ -3203,6 +3232,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3261,7 +3291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.5333304, g: 0.8018868, b: 0.57652694, a: 1}
+  baseColor: {r: 0.06430045, g: 0.04426695, b: 0.07064355, a: 1}
 --- !u!1 &1897776802
 GameObject:
   m_ObjectHideFlags: 0
@@ -3309,6 +3339,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3367,7 +3398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 0.43867922, b: 0.9695142, a: 1}
+  baseColor: {r: 0.17380263, g: 0.16256635, b: 0.14752063, a: 1}
 --- !u!1 &1934062650
 GameObject:
   m_ObjectHideFlags: 0
@@ -3415,6 +3446,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3473,7 +3505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.2264151, g: 0.056603774, b: 0.056603774, a: 1}
+  baseColor: {r: 0.16893697, g: 0.17892565, b: 0.015379431, a: 1}
 --- !u!1 &1968283459
 GameObject:
   m_ObjectHideFlags: 0
@@ -3521,6 +3553,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3579,7 +3612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.23202206, g: 0.6226415, b: 0.5163263, a: 1}
+  baseColor: {r: 0.1041804, g: 0.21322003, b: 0.08269642, a: 1}
 --- !u!1 &2097263870
 GameObject:
   m_ObjectHideFlags: 0
@@ -3627,6 +3660,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3685,4 +3719,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517c0ae0ded2fe4da137af302ce7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.25485048, g: 0.6509434, b: 0.55639136, a: 1}
+  baseColor: {r: 0.10660272, g: 0.1350273, b: 0.0020360474, a: 1}

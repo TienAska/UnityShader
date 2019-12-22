@@ -3,38 +3,36 @@
 
 #include "../ShaderLibrary/Common.hlsl"
 
-#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
-
-UNITY_INSTANCING_BUFFER_START(PerInstance)
+UNITY_INSTANCING_BUFFER_START(UnityPerMaterial)
 	UNITY_DEFINE_INSTANCED_PROP(float4, _BaseColor)
-UNITY_INSTANCING_BUFFER_END(PerInstance)
+UNITY_INSTANCING_BUFFER_END(UnityPerMaterial)
 
-struct VertexInput
+struct Attributes
 {
-    float4 pos : POSITION;
+    float3 positionOS : POSITION;
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
-struct VertexOutput
+struct Varyings
 {
-    float4 clipPos : SV_POSITION;
+    float4 positionCS : SV_POSITION;
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
-VertexOutput UnlitPassVertex (VertexInput input)
+Varyings UnlitPassVertex (Attributes input)
 {
-    VertexOutput output;
+    Varyings output;
     UNITY_SETUP_INSTANCE_ID(input);
     UNITY_TRANSFER_INSTANCE_ID(input, output);
-    float4 worldPos = mul(UNITY_MATRIX_M, float4(input.pos.xyz, 1.0));
-    output.clipPos = mul(unity_MatrixVP, worldPos);
+    float3 positionWS = TransformObjectToWorld(input.positionOS);
+    output.positionCS = TransformWorldToHClip(positionWS);
     return output;
 }
 
-float4 UnlitPassFragment (VertexOutput input) : SV_TARGET
+float4 UnlitPassFragment (Varyings input) : SV_TARGET
 {
     UNITY_SETUP_INSTANCE_ID(input);
-    return UNITY_ACCESS_INSTANCED_PROP(PerInstance, _BaseColor);
+    return UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial, _BaseColor);
 }
 
 

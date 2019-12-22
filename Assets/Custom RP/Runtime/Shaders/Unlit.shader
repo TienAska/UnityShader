@@ -19,7 +19,7 @@
             #pragma vertex UnlitPassVertex
             #pragma fragment UnlitPassFragment
 
-            #include "../ShaderLibrary/UnlitPass.hlsl"
+            #include "../Shaders/UnlitPass.hlsl"
 
             
 
