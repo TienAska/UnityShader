@@ -5,23 +5,17 @@ using System.Text;
 
 public class CreateCustomFile
 {
-    [MenuItem("Assets/Create/Shader/HLSL")]
-    static void CreateHLSLFile()
-    {
-        CreateFile("HLSL");
-    }
-
     static void CreateFile(string fileEx)
     {
         var assetPath = AssetDatabase.GetAssetPath(Selection.activeObject);
         var dataPath = Application.dataPath.Replace("Assets", "");
-        var FileName = "new" + fileEx + "." + fileEx.ToLower();
+        var FileName = "New" + fileEx + "." + fileEx.ToLower();
         var assetName = assetPath + "/" + FileName;
         var fullPath = dataPath + assetName;
 
         for (int i = 1; File.Exists(fullPath); i++)
         {
-            var newFileName = "new" + fileEx + i.ToString() + "." + fileEx.ToLower();
+            var newFileName = "New" + fileEx + i.ToString() + "." + fileEx.ToLower();
             assetName = assetPath + "/" + newFileName;
             fullPath = dataPath + assetName;
         }
@@ -32,5 +26,11 @@ public class CreateCustomFile
 
         var asset = AssetDatabase.LoadAssetAtPath(assetName, typeof(object));
         Selection.activeObject = asset;
+    }
+
+    [MenuItem("Assets/Create/Shader/HLSL")]
+    static void CreateHLSLFile()
+    {
+        CreateFile("HLSL");
     }
 }

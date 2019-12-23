@@ -24,7 +24,7 @@ public class PerObjectMaterialProperties : MonoBehaviour
         GetComponent<MeshRenderer>().SetPropertyBlock(block);
     }
 
-    public void setColor(Color color)
+    public void SetColor(Color color)
     {
         baseColor = color;
         OnValidate();

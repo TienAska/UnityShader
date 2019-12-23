@@ -5,13 +5,10 @@ using UnityEngine.Rendering;
 public class CustomRenderPipelineAsset : RenderPipelineAsset
 {
     [SerializeField]
-    bool dynamicBatching = false;
-
-    [SerializeField]
-    bool instancing = false;
+    bool useDynamicBatching = true, useGPUInstancing = true, useSRPBatcher = true;
 
     protected override RenderPipeline CreatePipeline()
     {
-        return new CustomRenderPipeline(dynamicBatching, instancing);
+        return new CustomRenderPipeline(useDynamicBatching, useGPUInstancing, useSRPBatcher);
     }
 }

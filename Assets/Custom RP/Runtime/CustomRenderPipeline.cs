@@ -12,16 +12,14 @@ public class CustomRenderPipeline : RenderPipeline
     //Vector4[] visibleLightColors = new Vector4[maxVisibleLights];
     //Vector4[] visibleLightDirections = new Vector4[maxVisibleLights];
 
-    //bool bBatching;
-    //bool bInstancing;
+    bool useDynamicBatching, useGPUInstancing;
 
-    public CustomRenderPipeline(bool dynamicBatching, bool instancing)
+    public CustomRenderPipeline(bool useDynamicBatching, bool useGPUInstancing, bool useSRPBatcher)
     {
-        GraphicsSettings.useScriptableRenderPipelineBatching = true;
+        this.useDynamicBatching = useDynamicBatching;
+        this.useGPUInstancing = useGPUInstancing;
+        GraphicsSettings.useScriptableRenderPipelineBatching = useSRPBatcher;
         GraphicsSettings.lightsUseLinearIntensity = true;
-
-        //bBatching = dynamicBatching;
-        //bInstancing = instancing;
     }
 
     CameraRenderer renderer = new CameraRenderer();
@@ -30,7 +28,7 @@ public class CustomRenderPipeline : RenderPipeline
     {
         foreach (Camera camera in cameras)
         {
-            renderer.Render(context, camera);
+            renderer.Render(context, camera, useDynamicBatching, useGPUInstancing);
         }
     }
 }
