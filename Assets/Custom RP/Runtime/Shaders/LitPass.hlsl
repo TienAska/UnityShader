@@ -2,6 +2,8 @@
 #define CUSTOM_LIT_PASS_INCLUDED
 
 #include "../ShaderLibrary/Common.hlsl"
+#include "../ShaderLibrary/Surface.hlsl"
+#include "../ShaderLibrary/Lighting.hlsl"
 
 TEXTURE2D(_BaseMap);
 SAMPLER(sampler_BaseMap);
@@ -27,9 +29,6 @@ float3 DiffuseLight (int index, float3 normal)
     return diffuse * lightColor;
 }
 
-UNITY_INSTANCING_BUFFER_START(PerInstance)
-	UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
-UNITY_INSTANCING_BUFFER_END(PerInstance)
 
 struct Attributes
 {
@@ -42,6 +41,7 @@ struct Attributes
 struct Varyings
 {
     float4 positionCS : SV_POSITION;
+	float3 positionWS : VAR_POSITION;
 	float3 normalWS : VAR_NORMAL;
 	float2 baseUV : VAR_BASE_UV;
 	UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -52,8 +52,8 @@ Varyings LitPassVertex (Attributes input)
 	Varyings output;
     UNITY_SETUP_INSTANCE_ID(input);
     UNITY_TRANSFER_INSTANCE_ID(input, output);
-	float3 positionWS = TransformObjectToWorld(input.positionOS);
-    output.positionCS = TransformWorldToHClip(positionWS);
+	output.positionWS = TransformObjectToWorld(input.positionOS);
+    output.positionCS = TransformWorldToHClip(output.positionWS);
     output.normalWS = TransformObjectToWorldNormal(input.normalOS);
 
 	float4 baseST = UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial, _BaseMap_ST);
@@ -68,8 +68,6 @@ float4 LitPassFragment(Varyings input) : SV_TARGET
 	float4 baseColor = UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial, _BaseColor);
 	float4 base = baseMap * baseColor;
     
-    input.normalWS = normalize(input.normalWS);
-
     //float3 diffuseLight = 0;
     //for(int i = 0; i < MAX_VISIBLE_LIGHTS; i++)
     //{
@@ -77,9 +75,15 @@ float4 LitPassFragment(Varyings input) : SV_TARGET
     //}
     //float3 color = diffuseLight * baseColor;
     
-	base.rgb = input.normalWS;
+	//base.rgb = abs(length(input.normalWS) - 1) * 10;
     
-    return base;
+	Surface surface;
+	surface.normal = normalize(input.normalWS);
+	surface.color = base.rgb;
+	surface.alpha = base.a;
+    
+	float3 color = GetLighting(surface);
+	return float4(color, surface.alpha);
 }
 
 

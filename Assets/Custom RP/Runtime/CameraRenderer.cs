@@ -99,9 +99,9 @@ public partial class CameraRenderer
         // draw opaque
         var sortingSettings = new SortingSettings(camera) { criteria = SortingCriteria.CommonOpaque };
         var drawingSettings = new DrawingSettings(unlitShaderTagId, sortingSettings) { enableDynamicBatching = useDynamicBatching, enableInstancing = useGPUInstancing };
+        drawingSettings.SetShaderPassName(1, litShaderTagId);
         var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
         context.DrawRenderers(cullingResults, ref drawingSettings, ref filteringSettings);
-        drawingSettings.SetShaderPassName(1, litShaderTagId);
 
         // draw skeybox
         context.DrawSkybox(camera);
