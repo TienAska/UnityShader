@@ -3,6 +3,7 @@
 
 #include "../ShaderLibrary/Common.hlsl"
 #include "../ShaderLibrary/Surface.hlsl"
+#include "../ShaderLibrary/Light.hlsl"
 #include "../ShaderLibrary/Lighting.hlsl"
 
 TEXTURE2D(_BaseMap);
@@ -13,22 +14,6 @@ UNITY_INSTANCING_BUFFER_START(UnityPerMaterial)
 	UNITY_DEFINE_INSTANCED_PROP(float4, _BaseColor)
 	UNITY_DEFINE_INSTANCED_PROP(float, _Cutoff)
 UNITY_INSTANCING_BUFFER_END(UnityPerMaterial)
-
-#define MAX_VISIBLE_LIGHTS 4
-
-CBUFFER_START(_LightBuffer)
-    float4 _VisibleLightColors[MAX_VISIBLE_LIGHTS];
-    float4 _VisibleLightDirections[MAX_VISIBLE_LIGHTS];
-CBUFFER_END
-
-float3 DiffuseLight (int index, float3 normal)
-{
-    float3 lightColor = _VisibleLightColors[index].rgb;
-    float3 lightDirection = _VisibleLightDirections[index].rgb;
-    float diffuse = saturate(dot(normal, lightDirection));
-    return diffuse * lightColor;
-}
-
 
 struct Attributes
 {

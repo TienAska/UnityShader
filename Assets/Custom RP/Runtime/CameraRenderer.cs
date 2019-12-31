@@ -3,14 +3,6 @@ using UnityEngine.Rendering;
 
 public partial class CameraRenderer
 {
-    const int maxVisibleLights = 4;
-
-    static int visibleLightColorsId = Shader.PropertyToID("_VisibleLightColors");
-    static int visibleLightDirectionsId = Shader.PropertyToID("_VisibleLightDirections");
-
-    Vector4[] visibleLightColors = new Vector4[maxVisibleLights];
-    Vector4[] visibleLightDirections = new Vector4[maxVisibleLights];
-
     ScriptableRenderContext context;
 
     Camera camera;
@@ -23,6 +15,8 @@ public partial class CameraRenderer
     static ShaderTagId
         unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit"),
         litShaderTagId = new ShaderTagId("CustomLit");
+
+    Lighting lighting = new Lighting();
 
     public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing)
     {
@@ -38,10 +32,7 @@ public partial class CameraRenderer
 
         Setup();
 
-        ConfigureLights();
-
-        buffer.SetGlobalVectorArray(visibleLightColorsId, visibleLightColors);
-        buffer.SetGlobalVectorArray(visibleLightDirectionsId, visibleLightDirections);
+        lighting.Setup(context);
 
         DrawVisibleGeometry(useDynamicBatching, useGPUInstancing);
 
@@ -111,20 +102,5 @@ public partial class CameraRenderer
         drawingSettings.sortingSettings = sortingSettings;
         filteringSettings.renderQueueRange = RenderQueueRange.transparent;
         context.DrawRenderers(cullingResults, ref drawingSettings, ref filteringSettings);
-    }
-
-
-    void ConfigureLights()
-    {
-        for (int i = 0; i < cullingResults.visibleLights.Length; i++)
-        {
-            VisibleLight light = cullingResults.visibleLights[i];
-            visibleLightColors[i] = light.finalColor;
-            Vector4 v = light.localToWorldMatrix.GetColumn(2);
-            v.x = -v.x;
-            v.y = -v.y;
-            v.z = -v.z;
-            visibleLightDirections[i] = v;
-        }
     }
 }
