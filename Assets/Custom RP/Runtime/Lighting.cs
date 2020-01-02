@@ -6,8 +6,6 @@ public class Lighting
 {
     const string bufferName = "Lighting";
 
-    CommandBuffer buffer = new CommandBuffer { name = bufferName };
-
     const int maxDirLightCount = 4;
 
     static int 
@@ -19,21 +17,8 @@ public class Lighting
         dirLightColors = new Vector4[maxDirLightCount],
         dirLightDirections = new Vector4[maxDirLightCount];
 
+    CommandBuffer buffer = new CommandBuffer { name = bufferName };
 
-
-    //void ConfigureLights()
-    //{
-    //    for (int i = 0; i < cullingResults.visibleLights.Length; i++)
-    //    {
-    //        VisibleLight light = cullingResults.visibleLights[i];
-    //        visibleLightColors[i] = light.finalColor;
-    //        Vector4 v = light.localToWorldMatrix.GetColumn(2);
-    //        v.x = -v.x;
-    //        v.y = -v.y;
-    //        v.z = -v.z;
-    //        visibleLightDirections[i] = v;
-    //    }
-    //}
     CullingResults cullingResults;
 
     public void Setup(ScriptableRenderContext context, CullingResults cullingResults)
@@ -49,10 +34,17 @@ public class Lighting
     void SetupLights()
     {
         NativeArray<VisibleLight> visibleLights = cullingResults.visibleLights;
-        for (int i = 0; i < visibleLights.Length; i++)
+        for (int dirLightCount = 0, i = 0; i < visibleLights.Length; i++)
         {
             VisibleLight visibleLight = visibleLights[i];
-            SetupDirectionalLight(i, visibleLight);
+            if (visibleLight.lightType == LightType.Directional)
+            {
+                SetupDirectionalLight(dirLightCount++, ref visibleLight);
+                if (dirLightCount >= maxDirLightCount)
+                {
+                    break;
+                }
+            }
         }
 
         buffer.SetGlobalInt(dirLightCountId, visibleLights.Length);
@@ -60,7 +52,7 @@ public class Lighting
         buffer.SetGlobalVectorArray(dirLightDirectionsId, dirLightDirections);
     }
 
-    void SetupDirectionalLight(int index, VisibleLight visibleLight)
+    void SetupDirectionalLight(int index, ref VisibleLight visibleLight)
     {
         dirLightColors[index] = visibleLight.finalColor;
         dirLightDirections[index] = -visibleLight.localToWorldMatrix.GetColumn(2);
