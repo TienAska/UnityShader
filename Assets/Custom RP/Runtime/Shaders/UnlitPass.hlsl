@@ -1,5 +1,5 @@
-﻿#ifndef CUSTOM_UNLIT_PASS_INCLUDE
-#define CUSTOM_UNLIT_PASS_INCLUDE
+﻿#ifndef CUSTOM_UNLIT_PASS_INCLUDED
+#define CUSTOM_UNLIT_PASS_INCLUDED
 
 #include "../ShaderLibrary/Common.hlsl"
 
@@ -52,4 +52,4 @@ float4 UnlitPassFragment (Varyings input) : SV_TARGET
 }
 
 
-#endif // CUSTOM_UNLIT_PASS_INCLUDE
+#endif // CUSTOM_UNLIT_PASS_INCLUDED

@@ -24,16 +24,15 @@
 
             #pragma shader_feature _CLIPPING
 			#pragma multi_compile_instancing
-			#pragma instancing_options assumeuniformscaling
 
             #pragma vertex UnlitPassVertex
             #pragma fragment UnlitPassFragment
 
-            #include "../Shaders/UnlitPass.hlsl"
-
-            
+            #include "UnlitPass.hlsl"
 
             ENDHLSL
         }
     }
+
+    CustomEditor "CustomShaderGUI"
 }
