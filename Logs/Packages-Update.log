@@ -119,3 +119,11 @@ Update Mode: updateDependencies
 
 The following packages were updated:
   com.unity.render-pipelines.core from version 7.1.7 to 7.1.8
+
+=== Thu Jun 25 16:19:43 2020
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.render-pipelines.core from version 7.1.8 to 7.3.1
