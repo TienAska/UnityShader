@@ -36,7 +36,6 @@ partial class CameraRenderer
         }
     }
 
-    //[Conditional("DEVELOPMENT_BUILD"), Conditional("UNITY_EDITOR")]
     partial void DrawUnsupportedShaders()
     {
         if (errorMaterial == null)
