@@ -4,18 +4,12 @@ using Conditional = System.Diagnostics.ConditionalAttribute;
 
 public class CustomRenderPipeline : RenderPipeline
 {
-    //const int maxVisibleLights = 4;
-
-    //static int visibleLightColorsId = Shader.PropertyToID("_VisibleLightColors");
-    //static int visibleLightDirectionsId = Shader.PropertyToID("_VisibleLightDirections");
-
-    //Vector4[] visibleLightColors = new Vector4[maxVisibleLights];
-    //Vector4[] visibleLightDirections = new Vector4[maxVisibleLights];
-
     bool useDynamicBatching, useGPUInstancing;
+    ShadowSettings shadowSettings;
 
-    public CustomRenderPipeline(bool useDynamicBatching, bool useGPUInstancing, bool useSRPBatcher)
+    public CustomRenderPipeline(bool useDynamicBatching, bool useGPUInstancing, bool useSRPBatcher, ShadowSettings shadowSettings)
     {
+        this.shadowSettings = shadowSettings;
         this.useDynamicBatching = useDynamicBatching;
         this.useGPUInstancing = useGPUInstancing;
         GraphicsSettings.useScriptableRenderPipelineBatching = useSRPBatcher;
@@ -28,7 +22,7 @@ public class CustomRenderPipeline : RenderPipeline
     {
         foreach (Camera camera in cameras)
         {
-            renderer.Render(context, camera, useDynamicBatching, useGPUInstancing);
+            renderer.Render(context, camera, useDynamicBatching, useGPUInstancing, shadowSettings);
         }
     }
 }
