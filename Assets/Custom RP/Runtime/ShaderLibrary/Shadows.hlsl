@@ -40,7 +40,6 @@ struct ShadowData
 float FadedShadowStrength (float distance, float scale, float fade)
 {
 	return saturate((1.0 - distance * scale) * fade);
-
 }
 
 ShadowData GetShadowData (Surface surfaceWS)
@@ -78,11 +77,11 @@ ShadowData GetShadowData (Surface surfaceWS)
 	}
 #endif	
 #if !defined(_CASCADE_BLEND_SOFT)
-		data.cascadeBlend = 1.0;
+	data.cascadeBlend = 1.0;
 #endif	
-		data.cascadeIndex = i;
-		return data;
-	}
+	data.cascadeIndex = i;
+	return data;
+}
 
 struct DirectionalShadowData
 {

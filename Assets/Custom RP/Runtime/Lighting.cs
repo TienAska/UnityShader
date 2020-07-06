@@ -45,7 +45,8 @@ public class Lighting
     void SetupLights()
     {
         NativeArray<VisibleLight> visibleLights = cullingResults.visibleLights;
-        for (int dirLightCount = 0, i = 0; i < visibleLights.Length; i++)
+        int dirLightCount = 0;
+        for (int i = 0; i < visibleLights.Length; i++)
         {
             VisibleLight visibleLight = visibleLights[i];
             if (visibleLight.lightType == LightType.Directional)
@@ -58,7 +59,7 @@ public class Lighting
             }
         }
 
-        buffer.SetGlobalInt(dirLightCountId, visibleLights.Length);
+        buffer.SetGlobalInt(dirLightCountId, dirLightCount);
         buffer.SetGlobalVectorArray(dirLightColorsId, dirLightColors);
         buffer.SetGlobalVectorArray(dirLightDirectionsId, dirLightDirections);
         buffer.SetGlobalVectorArray(dirLightShadowDataId, dirLightShadowData);

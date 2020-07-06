@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
 
 
@@ -39,9 +36,9 @@ public class Shadows
         public float nearPlaneOffset;
     }
 
-    ShadowedDirectionalLight[] ShadowedDirectionalLights = new ShadowedDirectionalLight[maxShadowedDirectionalLightCount];
+    ShadowedDirectionalLight[] shadowedDirectionalLights = new ShadowedDirectionalLight[maxShadowedDirectionalLightCount];
 
-    int ShadowedDirectionalLightCount;
+    int shadowedDirectionalLightCount;
 
     public void Setup(ScriptableRenderContext context, CullingResults cullingResults, ShadowSettings settings)
     {
@@ -49,12 +46,12 @@ public class Shadows
         this.cullingResults = cullingResults;
         this.settings = settings;
 
-        ShadowedDirectionalLightCount = 0;
+        shadowedDirectionalLightCount = 0;
     }
 
     public void Render()
     {
-        if (ShadowedDirectionalLightCount > 0)
+        if (shadowedDirectionalLightCount > 0)
         {
             RenderDirectionalShadows();
         }
@@ -86,11 +83,11 @@ public class Shadows
         buffer.BeginSample(bufferName);
         ExecuteBuffer();
 
-        int tiles = ShadowedDirectionalLightCount * settings.directional.cascadeCount;
+        int tiles = shadowedDirectionalLightCount * settings.directional.cascadeCount;
         int split = tiles <= 1 ? 1 : tiles <= 4 ? 2 : 4;
         int tileSize = atlasSize / split;
 
-        for (int i = 0; i < ShadowedDirectionalLightCount; i++)
+        for (int i = 0; i < shadowedDirectionalLightCount; i++)
         {
             RenderDirectionalShadows(i, split, tileSize);
         }
@@ -125,7 +122,7 @@ public class Shadows
 
     void RenderDirectionalShadows(int index, int split, int tileSize)
     {
-        ShadowedDirectionalLight light = ShadowedDirectionalLights[index];
+        ShadowedDirectionalLight light = shadowedDirectionalLights[index];
         var shadowSettings = new ShadowDrawingSettings(cullingResults, light.visibleLightIndex);
         int cascadeCount = settings.directional.cascadeCount;
         int tileOffset = index * cascadeCount;
@@ -156,10 +153,10 @@ public class Shadows
     {
         float texelSize = 2f * cullingSphere.w / tileSize;
         float filterSize = texelSize * ((float)settings.directional.filter + 1f);
-        cascadeData[index] = new Vector4(1f / cullingSphere.w, filterSize * 1.4142136f);
         cullingSphere.w -= filterSize;
         cullingSphere.w *= cullingSphere.w;
         cascadeCullingSpheres[index] = cullingSphere;
+        cascadeData[index] = new Vector4(1f / cullingSphere.w, filterSize * 1.4142136f);
     }
 
     Vector2 SetTileViewport(int index, int split, float tileSize)
@@ -202,7 +199,7 @@ public class Shadows
 
     public void Cleanup()
     {
-        if (ShadowedDirectionalLightCount > 0)
+        if (shadowedDirectionalLightCount > 0)
         {
             buffer.ReleaseTemporaryRT(dirShadowAtlasId);
             ExecuteBuffer();
@@ -211,15 +208,15 @@ public class Shadows
 
     public Vector3 ReserveDirectionalShadows(Light light, int visibleLightIndex)
     {
-        if (ShadowedDirectionalLightCount < maxShadowedDirectionalLightCount && light.shadows != LightShadows.None && light.shadowStrength > 0f)
+        if (shadowedDirectionalLightCount < maxShadowedDirectionalLightCount && light.shadows != LightShadows.None && light.shadowStrength > 0f && cullingResults.GetShadowCasterBounds(visibleLightIndex, out Bounds b))
         {
-            ShadowedDirectionalLights[ShadowedDirectionalLightCount] = new ShadowedDirectionalLight
+            shadowedDirectionalLights[shadowedDirectionalLightCount] = new ShadowedDirectionalLight
             {
                 visibleLightIndex = visibleLightIndex,
                 slopeScaleBias = light.shadowBias,
                 nearPlaneOffset = light.shadowNearPlane
             };
-            return new Vector3(light.shadowStrength, settings.directional.cascadeCount * ShadowedDirectionalLightCount++, light.shadowNormalBias);
+            return new Vector3(light.shadowStrength, settings.directional.cascadeCount * shadowedDirectionalLightCount++, light.shadowNormalBias);
         }
 
         return Vector3.zero;
