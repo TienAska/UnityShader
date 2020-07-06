@@ -13,7 +13,7 @@ public class RandomColor
             perObjMatProperty = selectedObjs.GetComponent<PerObjectMaterialProperties>();
             if (perObjMatProperty != null)
             {
-                perObjMatProperty.SetColor(Random.ColorHSV());
+                perObjMatProperty.SetColor(Random.ColorHSV(0f, 1f, 0f, 0.5f, valueMin: 0.8f, valueMax: 1f));
             }
         }
     }
