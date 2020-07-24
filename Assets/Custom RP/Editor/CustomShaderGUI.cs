@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class CustomShaderGUI : ShaderGUI
 {
@@ -45,6 +46,7 @@ public class CustomShaderGUI : ShaderGUI
         if (EditorGUI.EndChangeCheck())
         {
             SetShadowCasterPass();
+            CopyLightMappingProperties();
         }
     }
 
@@ -89,6 +91,7 @@ public class CustomShaderGUI : ShaderGUI
         if (PresetButton("Opaque"))
         {
             Clipping = false;
+            Shadows = ShadowMode.On;
             PremultiplyAlpha = false;
             SrcBlend = BlendMode.One;
             DstBlend = BlendMode.Zero;
@@ -102,6 +105,7 @@ public class CustomShaderGUI : ShaderGUI
         if (PresetButton("Clip"))
         {
             Clipping = true;
+            Shadows = ShadowMode.Clip;
             PremultiplyAlpha = false;
             SrcBlend = BlendMode.One;
             DstBlend = BlendMode.Zero;
@@ -115,6 +119,7 @@ public class CustomShaderGUI : ShaderGUI
         if (PresetButton("Fade"))
         {
             Clipping = false;
+            Shadows = ShadowMode.Dither;
             PremultiplyAlpha = false;
             SrcBlend = BlendMode.SrcAlpha;
             DstBlend = BlendMode.OneMinusSrcAlpha;
@@ -128,6 +133,7 @@ public class CustomShaderGUI : ShaderGUI
         if (HasPremultiplyAlpha && PresetButton("Transparent"))
         {
             Clipping = false;
+            Shadows = ShadowMode.Dither;
             PremultiplyAlpha = true;
             SrcBlend = BlendMode.One;
             DstBlend = BlendMode.OneMinusSrcAlpha;
@@ -211,6 +217,23 @@ public class CustomShaderGUI : ShaderGUI
             {
                 m.globalIlluminationFlags &= ~MaterialGlobalIlluminationFlags.EmissiveIsBlack;
             }
+        }
+    }
+
+    void CopyLightMappingProperties()
+    {
+        MaterialProperty mainTex = FindProperty("_MainTex", properties, false);
+        MaterialProperty baseMap = FindProperty("_BaseMap", properties, false);
+        if (mainTex != null && baseMap != null)
+        {
+            mainTex.textureValue = baseMap.textureValue;
+            mainTex.textureScaleAndOffset = baseMap.textureScaleAndOffset;
+        }
+        MaterialProperty color = FindProperty("_Color", properties, false);
+        MaterialProperty baseColor = FindProperty("_BaseColor", properties, false);
+        if (color != null && baseColor != null)
+        {
+            color.colorValue = baseColor.colorValue;
         }
     }
 }
