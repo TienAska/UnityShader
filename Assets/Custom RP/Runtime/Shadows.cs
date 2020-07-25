@@ -29,6 +29,11 @@ public class Shadows
         "_CASCADE_BLEND_DITHER"
     };
 
+    static string[] shadowMaskKeywords =
+    {
+        "_SHADOW_MASK_DISTANCE"
+    };
+
     struct ShadowedDirectionalLight
     {
         public int visibleLightIndex;
@@ -39,6 +44,8 @@ public class Shadows
     ShadowedDirectionalLight[] shadowedDirectionalLights = new ShadowedDirectionalLight[maxShadowedDirectionalLightCount];
 
     int shadowedDirectionalLightCount;
+
+    bool useShadowMask;
 
     public void Setup(ScriptableRenderContext context, CullingResults cullingResults, ShadowSettings settings)
     {
@@ -55,6 +62,10 @@ public class Shadows
         {
             RenderDirectionalShadows();
         }
+        buffer.BeginSample(bufferName);
+        SetKeywords(shadowMaskKeywords, useShadowMask ? 0 : -1);
+        buffer.EndSample(bufferName);
+        ExecuteBuffer();
     }
 
     static int
@@ -210,6 +221,11 @@ public class Shadows
     {
         if (shadowedDirectionalLightCount < maxShadowedDirectionalLightCount && light.shadows != LightShadows.None && light.shadowStrength > 0f && cullingResults.GetShadowCasterBounds(visibleLightIndex, out Bounds b))
         {
+            LightBakingOutput lightBaking = light.bakingOutput;
+            if (lightBaking.lightmapBakeType == LightmapBakeType.Mixed && lightBaking.mixedLightingMode == MixedLightingMode.Shadowmask)
+            {
+                useShadowMask = true;
+            }
             shadowedDirectionalLights[shadowedDirectionalLightCount] = new ShadowedDirectionalLight
             {
                 visibleLightIndex = visibleLightIndex,
