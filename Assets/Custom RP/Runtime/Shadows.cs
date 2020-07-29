@@ -218,19 +218,21 @@ public class Shadows
         }
     }
 
-    public Vector3 ReserveDirectionalShadows(Light light, int visibleLightIndex)
+    public Vector4 ReserveDirectionalShadows(Light light, int visibleLightIndex)
     {
         if (shadowedDirectionalLightCount < maxShadowedDirectionalLightCount && light.shadows != LightShadows.None && light.shadowStrength > 0f)
         {
+            float maskChannel = -1;
             LightBakingOutput lightBaking = light.bakingOutput;
             if (lightBaking.lightmapBakeType == LightmapBakeType.Mixed && lightBaking.mixedLightingMode == MixedLightingMode.Shadowmask)
             {
                 useShadowMask = true;
+                maskChannel = lightBaking.occlusionMaskChannel;
             }
 
             if (!cullingResults.GetShadowCasterBounds(visibleLightIndex, out Bounds b))
             {
-                return new Vector3(-light.shadowStrength, 0f, 0f);
+                return new Vector4(-light.shadowStrength, 0f, 0f, maskChannel);
             }
 
             shadowedDirectionalLights[shadowedDirectionalLightCount] = new ShadowedDirectionalLight
@@ -239,9 +241,9 @@ public class Shadows
                 slopeScaleBias = light.shadowBias,
                 nearPlaneOffset = light.shadowNearPlane
             };
-            return new Vector3(light.shadowStrength, settings.directional.cascadeCount * shadowedDirectionalLightCount++, light.shadowNormalBias);
+            return new Vector4(light.shadowStrength, settings.directional.cascadeCount * shadowedDirectionalLightCount++, light.shadowNormalBias, maskChannel);
         }
 
-        return Vector3.zero;
+        return new Vector4(0f, 0f, 0f, -1f);
     }
 }
