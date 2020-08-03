@@ -41,9 +41,18 @@ Varyings LitPassVertex (Attributes input)
     return output;
 }
 
+void ClipLOD(float2 positionCS, float fade)
+{
+#if defined(LOD_FADE_CROSSFADE)
+    float dither = InterleavedGradientNoise(positionCS, 0);
+    clip(fade + (fade < 0.0 ? dither : -dither));
+#endif
+}
+
 float4 LitPassFragment(Varyings input) : SV_TARGET
 {
     UNITY_SETUP_INSTANCE_ID(input);
+    ClipLOD(input.positionCS.xy, unity_LODFade.x);
 	float4 base = GetBase(input.baseUV);
 #if defined(_CLIPPING)
 	clip(base.a - GetCutoff(input.baseUV));
