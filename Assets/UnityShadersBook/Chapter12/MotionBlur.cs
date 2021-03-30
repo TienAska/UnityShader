@@ -36,8 +36,6 @@ public class MotionBlur : PostEffectsBase
                 Graphics.Blit(source, accumulationTexture);
             }
 
-            accumulationTexture.MarkRestoreExpected();
-
             material.SetFloat("_BlurAmount", 1.0f - blurAmount);
 
             Graphics.Blit(source, accumulationTexture, material);
